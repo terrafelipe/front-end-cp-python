@@ -26,6 +26,14 @@
 - Nunca `dangerouslySetInnerHTML`; nada de segredo no front (só `VITE_API_URL`).
 - Textos da interface em pt-BR; commits pequenos, assunto sem acento; push só com ok do Felipe.
 
+## Como trabalhar aqui
+- Retomar o trabalho: `/briefing`. SPEC e contrato moram no back (`../backend/docs/`).
+- Plano do front ainda não existe: gerar com `superpowers:writing-plans` (F1–F8 da SPEC) quando o
+  back fechar (D2), em `../backend/docs/superpowers/plans/`.
+- Tarefa que também mexe no back: abrir a sessão no back com `/add-dir ../frontend`.
+- E2E com Playwright roda pelo Claude, não pelo Codex (o sandbox do Codex bloqueia o Playwright no Windows).
+- Fechou tarefa: atualizar o Status do card no Notion "Tarefas do CP2" (com ok do Felipe) e a ficha.
+
 ## Armadilhas
 - Variável de ambiente só chega ao código com prefixo `VITE_`; mudou `.env`, reiniciar o `npm run dev`.
 - Token fica no `localStorage` (decisão D9 da SPEC): qualquer HTML cru vira roubo de sessão.
