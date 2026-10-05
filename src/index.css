@@ -128,3 +128,12 @@
     @apply font-sans;
     }
 }
+/* Séries dos gráficos (paleta validada pela skill dataviz: azul = entradas/valor, laranja = saídas). */
+:root {
+  --serie-1: #2a78d6;
+  --serie-2: #eb6834;
+}
+.dark {
+  --serie-1: #3987e5;
+  --serie-2: #d95926;
+}

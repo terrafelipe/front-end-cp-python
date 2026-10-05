@@ -4,6 +4,7 @@ import { RotaProtegida, SoAdmin } from "@/auth/Rotas"
 import Layout from "@/components/Layout"
 import { Toaster } from "@/components/ui/sonner"
 import Cadastro from "@/pages/Cadastro"
+import Dashboard from "@/pages/Dashboard"
 import Login from "@/pages/Login"
 
 function EmBreve({ titulo }: { titulo: string }) {
@@ -19,7 +20,7 @@ export default function App() {
           <Route path="/cadastro" element={<Cadastro />} />
           <Route element={<RotaProtegida />}>
             <Route element={<Layout />}>
-              <Route index element={<EmBreve titulo="Dashboard" />} />
+              <Route index element={<Dashboard />} />
               <Route path="produtos" element={<EmBreve titulo="Produtos" />} />
               <Route path="movimentacoes" element={<EmBreve titulo="Movimentações" />} />
               <Route path="categorias" element={<EmBreve titulo="Categorias" />} />
