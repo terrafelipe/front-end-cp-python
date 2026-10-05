@@ -24,7 +24,7 @@ describe("cliente da API", () => {
 
   it("converte o envelope de erro em ErroDaApi com o campo", async () => {
     responder(422, { erro: { codigo: "RN-02", mensagem: "Saída excede o saldo.", campo: "quantidade" } })
-    const erro = await api.post("/movimentacoes", {}).catch((e: ErroDaApi) => e)
+    const erro = (await api.post("/movimentacoes", {}).catch((e) => e)) as ErroDaApi
     expect(erro).toBeInstanceOf(ErroDaApi)
     expect(erro).toMatchObject({ status: 422, codigo: "RN-02", message: "Saída excede o saldo.", campo: "quantidade" })
   })
@@ -43,14 +43,14 @@ describe("cliente da API", () => {
     const aviso = vi.fn()
     definirAoDeslogar(aviso)
     responder(401, { erro: { codigo: "HTTP-401", mensagem: "E-mail ou senha inválidos.", campo: null } })
-    const erro = await api.post("/auth/login", {}).catch((e: ErroDaApi) => e)
+    const erro = (await api.post("/auth/login", {}).catch((e) => e)) as ErroDaApi
     expect(erro.message).toBe("E-mail ou senha inválidos.")
     expect(aviso).not.toHaveBeenCalled()
   })
 
   it("API fora do ar vira mensagem clara", async () => {
     vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new TypeError("Failed to fetch")))
-    const erro = await api.get("/health").catch((e: ErroDaApi) => e)
+    const erro = (await api.get("/health").catch((e) => e)) as ErroDaApi
     expect(erro).toMatchObject({ status: 0, codigo: "REDE" })
     expect(erro.message).toContain("Ela está rodando?")
   })
