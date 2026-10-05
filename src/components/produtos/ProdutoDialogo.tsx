@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { erroDo, tratarErro, type ErroCampo } from "@/lib/erros"
+import { semVazios } from "@/lib/formato"
 
 interface Props {
   produto?: Produto
@@ -45,8 +46,8 @@ export function ProdutoDialogo({ produto, categorias, fornecedores, aoSalvar, ga
     // Operador não envia preço de venda: o back recusaria (RN-09).
     if (ehAdmin && form.preco_venda !== "") corpo.preco_venda = Number(form.preco_venda)
     try {
-      if (produto) await api.put(`/produtos/${produto.id}`, corpo)
-      else await api.post("/produtos", corpo)
+      if (produto) await api.put(`/produtos/${produto.id}`, semVazios(corpo))
+      else await api.post("/produtos", semVazios(corpo))
       toast.success(produto ? "Produto atualizado." : "Produto criado.")
       setAberto(false)
       aoSalvar()

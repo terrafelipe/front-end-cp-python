@@ -13,3 +13,10 @@ describe("formato", () => {
     expect(dataHora("2026-09-25T15:30:00+00:00")).toMatch(/^25\/09\/2026 \d{2}:30$/)
   })
 })
+
+describe("semVazios", () => {
+  it("tira null, undefined e texto vazio, mantém zero e false", async () => {
+    const { semVazios } = await import("./formato")
+    expect(semVazios({ a: null, b: undefined, c: "", d: 0, e: false, f: "x" })).toEqual({ d: 0, e: false, f: "x" })
+  })
+})

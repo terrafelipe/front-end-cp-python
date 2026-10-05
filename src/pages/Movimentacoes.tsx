@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { useConsulta } from "@/hooks/useConsulta"
 import { erroDo, tratarErro, type ErroCampo } from "@/lib/erros"
-import { dataHora, dinheiro, ROTULO_TIPO } from "@/lib/formato"
+import { dataHora, dinheiro, ROTULO_TIPO, semVazios } from "@/lib/formato"
 
 const VAZIO = { produto_id: "", tipo: "ENTRADA" as TipoMovimentacao, quantidade: "", custo_unitario: "", motivo: "" }
 
@@ -38,14 +38,14 @@ export default function Movimentacoes() {
     e.preventDefault()
     setEnviando(true)
     try {
-      await api.post("/movimentacoes", {
+      await api.post("/movimentacoes", semVazios({
         produto_id: Number(form.produto_id),
         tipo: form.tipo,
         quantidade: Number(form.quantidade),
         // Custo só existe em entrada (RN-07).
         custo_unitario: form.tipo === "ENTRADA" && form.custo_unitario ? Number(form.custo_unitario) : null,
         motivo: form.motivo || null,
-      })
+      }))
       toast.success(`${ROTULO_TIPO[form.tipo]} registrada.`)
       setForm({ ...VAZIO, produto_id: form.produto_id, tipo: form.tipo })
       setErro(null)

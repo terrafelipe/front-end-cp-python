@@ -16,3 +16,8 @@ export function dataCurta(isoData: string): string {
 }
 
 export const ROTULO_TIPO = { ENTRADA: "Entrada", SAIDA: "Saída", AJUSTE: "Ajuste" } as const
+
+/** Corpo de requisição sem campos vazios: a API recusa null em campo opcional (só aceita ausente). */
+export function semVazios(corpo: Record<string, unknown>): Record<string, unknown> {
+  return Object.fromEntries(Object.entries(corpo).filter(([, v]) => v !== null && v !== undefined && v !== ""))
+}

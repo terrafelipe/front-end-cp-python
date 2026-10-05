@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { useConsulta } from "@/hooks/useConsulta"
 import { tratarErro } from "@/lib/erros"
+import { semVazios } from "@/lib/formato"
 
 type Form = { nome: string; cnpj: string; email: string; telefone: string }
 const CAMPOS: DefCampo<Form>[] = [
@@ -18,7 +19,7 @@ const CAMPOS: DefCampo<Form>[] = [
   { nome: "email", rotulo: "E-mail", tipo: "email" },
   { nome: "telefone", rotulo: "Telefone" },
 ]
-const corpo = (d: Form) => ({ nome: d.nome, cnpj: d.cnpj || null, email: d.email || null, telefone: d.telefone || null })
+const corpo = (d: Form) => semVazios(d)
 
 export default function Fornecedores() {
   const [pagina, setPagina] = useState(1)

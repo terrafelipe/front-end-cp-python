@@ -34,3 +34,5 @@ Usuários de demonstração: `admin@demo.com` / `admin123` e `operador@demo.com`
 ```powershell
 npm run lint; npm run build; npm test
 ```
+
+E2E: ver `e2e/README.md`.
