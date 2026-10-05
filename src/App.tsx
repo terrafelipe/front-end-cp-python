@@ -6,6 +6,8 @@ import { Toaster } from "@/components/ui/sonner"
 import Cadastro from "@/pages/Cadastro"
 import Dashboard from "@/pages/Dashboard"
 import Login from "@/pages/Login"
+import ProdutoHistorico from "@/pages/ProdutoHistorico"
+import Produtos from "@/pages/Produtos"
 
 function EmBreve({ titulo }: { titulo: string }) {
   return <h1 className="text-2xl font-semibold">{titulo}</h1>
@@ -21,7 +23,8 @@ export default function App() {
           <Route element={<RotaProtegida />}>
             <Route element={<Layout />}>
               <Route index element={<Dashboard />} />
-              <Route path="produtos" element={<EmBreve titulo="Produtos" />} />
+              <Route path="produtos" element={<Produtos />} />
+              <Route path="produtos/:id" element={<ProdutoHistorico />} />
               <Route path="movimentacoes" element={<EmBreve titulo="Movimentações" />} />
               <Route path="categorias" element={<EmBreve titulo="Categorias" />} />
               <Route element={<SoAdmin />}>
