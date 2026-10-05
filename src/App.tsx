@@ -4,15 +4,14 @@ import { RotaProtegida, SoAdmin } from "@/auth/Rotas"
 import Layout from "@/components/Layout"
 import { Toaster } from "@/components/ui/sonner"
 import Cadastro from "@/pages/Cadastro"
+import Categorias from "@/pages/Categorias"
 import Dashboard from "@/pages/Dashboard"
+import Fornecedores from "@/pages/Fornecedores"
 import Login from "@/pages/Login"
 import Movimentacoes from "@/pages/Movimentacoes"
 import ProdutoHistorico from "@/pages/ProdutoHistorico"
 import Produtos from "@/pages/Produtos"
-
-function EmBreve({ titulo }: { titulo: string }) {
-  return <h1 className="text-2xl font-semibold">{titulo}</h1>
-}
+import Usuarios from "@/pages/Usuarios"
 
 export default function App() {
   return (
@@ -27,10 +26,10 @@ export default function App() {
               <Route path="produtos" element={<Produtos />} />
               <Route path="produtos/:id" element={<ProdutoHistorico />} />
               <Route path="movimentacoes" element={<Movimentacoes />} />
-              <Route path="categorias" element={<EmBreve titulo="Categorias" />} />
+              <Route path="categorias" element={<Categorias />} />
               <Route element={<SoAdmin />}>
-                <Route path="fornecedores" element={<EmBreve titulo="Fornecedores" />} />
-                <Route path="usuarios" element={<EmBreve titulo="Usuários" />} />
+                <Route path="fornecedores" element={<Fornecedores />} />
+                <Route path="usuarios" element={<Usuarios />} />
               </Route>
             </Route>
           </Route>
