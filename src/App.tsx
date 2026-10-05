@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/sonner"
 import Cadastro from "@/pages/Cadastro"
 import Dashboard from "@/pages/Dashboard"
 import Login from "@/pages/Login"
+import Movimentacoes from "@/pages/Movimentacoes"
 import ProdutoHistorico from "@/pages/ProdutoHistorico"
 import Produtos from "@/pages/Produtos"
 
@@ -25,7 +26,7 @@ export default function App() {
               <Route index element={<Dashboard />} />
               <Route path="produtos" element={<Produtos />} />
               <Route path="produtos/:id" element={<ProdutoHistorico />} />
-              <Route path="movimentacoes" element={<EmBreve titulo="Movimentações" />} />
+              <Route path="movimentacoes" element={<Movimentacoes />} />
               <Route path="categorias" element={<EmBreve titulo="Categorias" />} />
               <Route element={<SoAdmin />}>
                 <Route path="fornecedores" element={<EmBreve titulo="Fornecedores" />} />
