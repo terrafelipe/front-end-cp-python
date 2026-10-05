@@ -15,7 +15,7 @@
 ## Comandos
 - Setup: `npm install` · Rodar: `npm run dev` (http://localhost:5173; back em :5000)
 - Checagem: `npm run lint; npm run build; npm test` (lint é o oxlint do template do Vite)
-- E2E (back e front de pé): ver `e2e/README.md` quando existir
+- E2E (back com seed novo e front de pé): ver `e2e/README.md`
 
 ## Regras do projeto
 - Toda chamada passa pelo cliente de `src/api/`; nunca `fetch` solto em componente.
@@ -28,8 +28,7 @@
 
 ## Como trabalhar aqui
 - Retomar o trabalho: `/briefing`. SPEC e contrato moram no back (`../backend/docs/`).
-- Plano do front ainda não existe: gerar com `superpowers:writing-plans` (F1–F8 da SPEC) quando o
-  back fechar (D2), em `../backend/docs/superpowers/plans/`.
+- Plano do front: `../backend/docs/superpowers/plans/2026-10-05-cp2-frontend.md` (executado em 05/10).
 - Tarefa que também mexe no back: abrir a sessão no back com `/add-dir ../frontend`.
 - E2E com Playwright roda pelo Claude, não pelo Codex (o sandbox do Codex bloqueia o Playwright no Windows).
 - Fechou tarefa: atualizar o Status do card no Notion "Tarefas do CP2" (com ok do Felipe) e a ficha.

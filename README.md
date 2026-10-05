@@ -17,6 +17,24 @@ Interface web do Gestor de Estoque (checkpoint de Python, FIAP). Consome a API F
 
 React 19 + Vite + TypeScript, Tailwind 4 + shadcn/ui, React Router, Recharts, sonner.
 
+## Telas
+
+| Rota | Tela | Quem vê |
+|---|---|---|
+| `/login`, `/cadastro` | Entrar e cadastrar empresa | todos |
+| `/` | Dashboard: KPIs, entradas × saídas, valor por categoria, top 5 saídas, alertas e análise de reposição (IA ou regras) | logado |
+| `/produtos`, `/produtos/:id` | Lista com busca e filtros, cadastro em diálogo, inativar, histórico | logado (preço e inativar: ADMIN) |
+| `/movimentacoes` | Entrada, saída e ajuste; extrato com filtros | logado |
+| `/categorias` | Cadastro de categorias | logado |
+| `/fornecedores`, `/usuarios` | Cadastros de apoio | ADMIN |
+
+## Integração com a API
+
+Toda chamada passa por `src/api/cliente.ts`: injeta o token (guardado no `localStorage`), converte o
+envelope `{"erro": {"codigo", "mensagem", "campo"}}` em `ErroDaApi` e, num 401 com sessão aberta,
+limpa o token e volta ao login. Erros aparecem em toast e destacam o campo indicado pela API.
+O dashboard inteiro vem de `GET /dashboard/resumo` numa requisição. Contrato: `docs/GRUPO.md` do back.
+
 ## Como rodar
 
 Pré-requisito: a API rodando em `http://127.0.0.1:5000` (ver README do back: `seed.py` e `app.py`).
