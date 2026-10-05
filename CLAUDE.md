@@ -14,7 +14,7 @@
 
 ## Comandos
 - Setup: `npm install` · Rodar: `npm run dev` (http://localhost:5173; back em :5000)
-- Checagem: `npm run lint; npm run build`
+- Checagem: `npm run lint; npm run build; npm test` (lint é o oxlint do template do Vite)
 - E2E (back e front de pé): ver `e2e/README.md` quando existir
 
 ## Regras do projeto
