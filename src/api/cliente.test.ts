@@ -39,6 +39,20 @@ describe("cliente da API", () => {
     expect(aviso).toHaveBeenCalledOnce()
   })
 
+  it("401 atrasado de um token antigo não derruba a sessão nova", async () => {
+    token.gravar("velho")
+    const aviso = vi.fn()
+    definirAoDeslogar(aviso)
+    let responderDepois: (r: Response) => void = () => {}
+    vi.stubGlobal("fetch", vi.fn().mockReturnValue(new Promise<Response>((r) => { responderDepois = r })))
+    const pedido = api.get("/produtos").catch(() => {})
+    token.gravar("novo")
+    responderDepois(new Response(JSON.stringify({ erro: { codigo: "HTTP-401", mensagem: "Token expirado.", campo: null } }), { status: 401 }))
+    await pedido
+    expect(token.ler()).toBe("novo")
+    expect(aviso).not.toHaveBeenCalled()
+  })
+
   it("401 sem token (senha errada no login) não dispara o aviso", async () => {
     const aviso = vi.fn()
     definirAoDeslogar(aviso)

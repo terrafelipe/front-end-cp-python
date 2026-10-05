@@ -71,7 +71,8 @@ async function requisitar<T>(metodo: string, caminho: string, opcoes: { corpo?: 
   const corpo = await resposta.json().catch(() => null)
   if (!resposta.ok) {
     // Só desloga se havia sessão: 401 no login é senha errada, não sessão expirada.
-    if (resposta.status === 401 && atual) {
+    // Compara com o token atual: um 401 atrasado não derruba uma sessão nova.
+    if (resposta.status === 401 && atual && token.ler() === atual) {
       token.limpar()
       aoDeslogar()
     }

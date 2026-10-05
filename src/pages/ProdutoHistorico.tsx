@@ -23,7 +23,7 @@ export default function ProdutoHistorico() {
       <Link to="/produtos" className="text-sm underline">← Produtos</Link>
       <h1 className="text-2xl font-semibold">{p ? `${p.nome} (${p.sku})` : "Histórico do produto"}</h1>
       {p && <p className="text-sm text-muted-foreground">Saldo {p.saldo} · mínimo {p.estoque_minimo} · custo médio {dinheiro(p.preco_custo)}</p>}
-      <EstadoLista carregando={movs.carregando} erro={movs.erro ?? produto.erro} vazio={movs.dados?.total === 0} mensagemVazia="Sem movimentações." aoTentarDeNovo={movs.recarregar}>
+      <EstadoLista carregando={movs.carregando} erro={movs.erro ?? produto.erro} vazio={movs.dados?.total === 0} mensagemVazia="Sem movimentações." aoTentarDeNovo={() => { produto.recarregar(); movs.recarregar() }}>
         {movs.dados && (
           <>
             <div className="overflow-x-auto">

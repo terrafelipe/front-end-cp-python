@@ -24,7 +24,7 @@ const NOVO: DefCampo<Form>[] = [
 const EDICAO: DefCampo<Form>[] = NOVO.map((c) => (c.nome === "senha" ? { ...c, rotulo: "Nova senha (opcional)", obrigatorio: false } : c))
 
 export default function Usuarios() {
-  const { usuario: eu } = useSessao()
+  const { usuario: eu, atualizar } = useSessao()
   const [pagina, setPagina] = useState(1)
   const lista = useConsulta(() => api.get<Pagina<Usuario>>("/usuarios", { pagina, por_pagina: 20, incluir_inativos: true }), [pagina])
 
@@ -69,6 +69,9 @@ export default function Usuarios() {
                             await api.put(`/usuarios/${u.id}`, senha ? d : resto)
                             toast.success("Usuário atualizado.")
                             lista.recarregar()
+                            // Quem muda o próprio papel vê o menu certo sem recarregar a página.
+                            // Fora do await: o PUT já deu certo, uma falha aqui não desfaz o formulário.
+                            if (u.id === eu?.id) atualizar().catch(tratarErro)
                           }}
                           gatilho={<Button size="sm" variant="outline">Editar</Button>}
                         />

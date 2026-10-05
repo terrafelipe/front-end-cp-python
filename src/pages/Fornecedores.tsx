@@ -19,6 +19,7 @@ const CAMPOS: DefCampo<Form>[] = [
   { nome: "email", rotulo: "E-mail", tipo: "email" },
   { nome: "telefone", rotulo: "Telefone" },
 ]
+// Na criação, campo vazio fica de fora; na edição vai "" e o back limpa o valor.
 const corpo = (d: Form) => semVazios(d)
 
 export default function Fornecedores() {
@@ -62,7 +63,7 @@ export default function Fornecedores() {
                         <DialogoFormulario
                           titulo="Editar fornecedor" campos={CAMPOS}
                           inicial={{ nome: f.nome, cnpj: f.cnpj ?? "", email: f.email ?? "", telefone: f.telefone ?? "" }}
-                          aoEnviar={async (d) => { await api.put(`/fornecedores/${f.id}`, corpo(d)); toast.success("Fornecedor atualizado."); lista.recarregar() }}
+                          aoEnviar={async (d) => { await api.put(`/fornecedores/${f.id}`, d); toast.success("Fornecedor atualizado."); lista.recarregar() }}
                           gatilho={<Button size="sm" variant="outline">Editar</Button>}
                         />
                         <ConfirmarAcao titulo={`Excluir ${f.nome}?`} descricao="Só é possível excluir fornecedor sem produtos." rotulo="Excluir" aoConfirmar={() => excluir(f)} gatilho={<Button size="sm" variant="ghost">Excluir</Button>} />

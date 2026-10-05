@@ -46,7 +46,8 @@ export function ProdutoDialogo({ produto, categorias, fornecedores, aoSalvar, ga
     // Operador não envia preço de venda: o back recusaria (RN-09).
     if (ehAdmin && form.preco_venda !== "") corpo.preco_venda = Number(form.preco_venda)
     try {
-      if (produto) await api.put(`/produtos/${produto.id}`, semVazios(corpo))
+      // Na edição, descrição vazia vai como "" para limpar o valor salvo.
+      if (produto) await api.put(`/produtos/${produto.id}`, { ...semVazios(corpo), descricao: form.descricao })
       else await api.post("/produtos", semVazios(corpo))
       toast.success(produto ? "Produto atualizado." : "Produto criado.")
       setAberto(false)
@@ -89,9 +90,9 @@ export function ProdutoDialogo({ produto, categorias, fornecedores, aoSalvar, ga
               {categorias.map((c) => <option key={c.id} value={c.id}>{c.nome}</option>)}
             </Selecao>
           </Campo>
-          <Campo rotulo="Fornecedor" id="fornecedor_id" erro={erroDo("fornecedor_id", erro)}>
+          <Campo rotulo="Fornecedor" id="fornecedor_id" erro={erroDo("fornecedor_id", erro)} dica={produto?.fornecedor_id ? "A API não desvincula fornecedor; dá para trocar por outro." : undefined}>
             <Selecao id="fornecedor_id" value={form.fornecedor_id} onChange={alterar("fornecedor_id")}>
-              <option value="">Nenhum</option>
+              <option value="" disabled={!!produto?.fornecedor_id}>Nenhum</option>
               {fornecedores.map((f) => <option key={f.id} value={f.id}>{f.nome}</option>)}
             </Selecao>
           </Campo>

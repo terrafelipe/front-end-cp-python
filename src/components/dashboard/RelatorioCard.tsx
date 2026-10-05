@@ -45,7 +45,13 @@ export function RelatorioCard() {
       </CardHeader>
       <CardContent className="grid gap-3 text-sm">
         {salvo.carregando && !novo && <p className="text-muted-foreground">Carregando…</p>}
-        {!salvo.carregando && !relatorio && <p className="text-muted-foreground">Nenhuma análise gerada ainda.</p>}
+        {salvo.erro && !novo && (
+          <div className="flex flex-wrap items-center gap-2">
+            <p className="text-destructive">{salvo.erro.message}</p>
+            <Button size="sm" variant="outline" onClick={salvo.recarregar}>Tentar de novo</Button>
+          </div>
+        )}
+        {!salvo.carregando && !salvo.erro && !relatorio && <p className="text-muted-foreground">Nenhuma análise gerada ainda.</p>}
         {relatorio && (
           <>
             <div className="flex flex-wrap items-center gap-2">

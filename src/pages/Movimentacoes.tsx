@@ -25,8 +25,9 @@ export default function Movimentacoes() {
   const extrato = useConsulta(
     () => api.get<Pagina<Movimentacao>>("/movimentacoes", {
       ...filtros,
-      // A API compara com o instante: só a data cortaria o próprio dia final.
-      ate: filtros.ate ? `${filtros.ate}T23:59:59` : "",
+      // A API compara instantes em UTC: o dia escolhido vai do início ao fim no fuso local.
+      de: filtros.de ? new Date(`${filtros.de}T00:00:00`).toISOString() : "",
+      ate: filtros.ate ? new Date(`${filtros.ate}T23:59:59.999`).toISOString() : "",
       por_pagina: 20,
     }),
     [filtros],

@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react"
 import { toast } from "sonner"
-import { api, definirAoDeslogar, token } from "@/api/cliente"
+import { api, definirAoDeslogar, ErroDaApi, token } from "@/api/cliente"
 import type { Token, Usuario } from "@/api/tipos"
 
 export interface Registro {
@@ -18,6 +18,7 @@ interface Sessao {
   entrar(email: string, senha: string): Promise<void>
   registrar(dados: Registro): Promise<void>
   sair(): void
+  atualizar(): Promise<void>
 }
 
 const Contexto = createContext<Sessao | null>(null)
@@ -32,9 +33,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       toast.error("Sessão expirada. Entre de novo.")
     })
     if (!token.ler()) return
-    // Token salvo pode estar velho (back recriado): /auth/me decide.
+    // Token salvo pode estar velho (back recriado): /auth/me decide. Um 401
+    // já limpa o token no cliente; rede ou 500 mantêm o token para o próximo F5.
     api.get<Usuario>("/auth/me")
-      .then(setUsuario, () => token.limpar())
+      .then(setUsuario, (e) => {
+        if (!(e instanceof ErroDaApi && e.status === 401)) toast.error(e instanceof ErroDaApi ? e.message : "Erro ao carregar a sessão.")
+      })
       .finally(() => setCarregando(false))
   }, [])
 
@@ -49,6 +53,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     ehAdmin: usuario?.role === "ADMIN",
     entrar: async (email, senha) => guardar(await api.post<Token>("/auth/login", { email, senha })),
     registrar: async (dados) => guardar(await api.post<Token>("/auth/register", dados)),
+    atualizar: async () => setUsuario(await api.get<Usuario>("/auth/me")),
     sair: () => {
       token.limpar()
       setUsuario(null)

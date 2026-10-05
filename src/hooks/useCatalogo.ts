@@ -1,3 +1,5 @@
+import { useEffect } from "react"
+import { toast } from "sonner"
 import { api } from "@/api/cliente"
 import type { Categoria, Fornecedor, Pagina } from "@/api/tipos"
 import { useConsulta } from "./useConsulta"
@@ -9,5 +11,8 @@ export function useCatalogo() {
     () => api.get<Pagina<Fornecedor>>("/fornecedores", { por_pagina: 100 }).catch(() => null),
     [],
   )
+  useEffect(() => {
+    if (categorias.erro) toast.error(`Categorias não carregaram: ${categorias.erro.message}`)
+  }, [categorias.erro])
   return { categorias: categorias.dados?.itens ?? [], fornecedores: fornecedores.dados?.itens ?? [] }
 }
