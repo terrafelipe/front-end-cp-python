@@ -37,3 +37,5 @@
 - Variável de ambiente só chega ao código com prefixo `VITE_`; mudou `.env`, reiniciar o `npm run dev`.
 - Token fica no `localStorage` (decisão D9 da SPEC): qualquer HTML cru vira roubo de sessão.
 - Erro de CORS = origem fora de `CORS_ORIGINS` no back (usar a porta 5173).
+- Reiniciar o back no Windows: matar todos os `python app.py` do `.venv` (o reloader do Flask
+  sobrevive ao `Stop-Process` do lançador) e conferir que só 1 processo escuta na `:5000` antes do E2E.
